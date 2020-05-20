@@ -94,6 +94,7 @@ func touch_imput():
 		var grid_position = pixel_to_grid(final_touch.x, final_touch.y);
 		if is_in_grid(grid_position.x, grid_position.y) && controlling:
 			touch_difference(pixel_to_grid(first_touch.x, first_touch.y), grid_position);
+			controlling = false;
 		
 func touch_difference(grid_1, grid_2):
 	var difference = grid_2 - grid_1;
