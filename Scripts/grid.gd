@@ -6,6 +6,7 @@ export (int) var height;
 export (int) var x_start;
 export (int) var y_start;
 export (int) var offset;
+export (int) var y_offset;
 
 # The piece array
 var possible_pieces = [
@@ -207,7 +208,8 @@ func refill_columns():
 					piece = possible_pieces[rand].instance();
 				
 				add_child(piece);
-				piece.position = grid_to_pixel(i, j);
+				piece.position = grid_to_pixel(i, j - y_offset);
+				piece.move(grid_to_pixel(i, j));
 				all_pieces[i][j] = piece;
 
 func _on_refill_timer_timeout():
