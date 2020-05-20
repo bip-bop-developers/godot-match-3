@@ -183,8 +183,32 @@ func collapse_columns():
 						all_pieces[i][j] = all_pieces[i][k];
 						all_pieces[i][k] = null;
 						break;
-					
+	get_parent().get_node("refill_timer").start();
 
 
 func _on_collapse_timer_timeout():
 	collapse_columns();
+
+
+func refill_columns():
+	for i in width:
+		for j in height:
+			if all_pieces[i][j] == null:
+				# choose a randon number and store it
+				var rand = floor(rand_range(0, possible_pieces.size()));
+				
+				# instance that piece from the array
+				var piece = possible_pieces[rand].instance();
+				
+				var loops = 0;
+				while(match_at(i, j, piece.color) && loops < 100):
+					rand = floor(rand_range(0, possible_pieces.size()));
+					loops += 1;
+					piece = possible_pieces[rand].instance();
+				
+				add_child(piece);
+				piece.position = grid_to_pixel(i, j);
+				all_pieces[i][j] = piece;
+
+func _on_refill_timer_timeout():
+	refill_columns();
