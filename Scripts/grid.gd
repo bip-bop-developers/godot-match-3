@@ -79,10 +79,11 @@ func pixel_to_grid(pixel_x, pixel_y):
 	var new_y = round((pixel_y - y_start) / -offset);
 	return Vector2(new_x, new_y);
 
-func is_in_grid(column, row):
-	return column >= 0 && column < width && row >= 0 && row < height;
+func is_in_grid(grid_position):
+	return grid_position.x >= 0 && grid_position.x < width && grid_position.y >= 0 && grid_position.y < height;
 
 func touch_imput():
+	"""
 	if Input.is_action_just_pressed("ui_touch"):
 		first_touch = get_global_mouse_position();
 		var grid_position = pixel_to_grid(first_touch.x, first_touch.y);
@@ -94,6 +95,17 @@ func touch_imput():
 		if is_in_grid(grid_position.x, grid_position.y) && controlling:
 			touch_difference(pixel_to_grid(first_touch.x, first_touch.y), grid_position);
 			controlling = false;
+	"""
+	# tweaK movement
+	if Input.is_action_just_pressed("ui_touch"):
+		if is_in_grid(pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y)):
+			first_touch = pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y);
+			controlling = true;
+	if Input.is_action_just_released("ui_touch"):
+		if is_in_grid(pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y)) && controlling:
+			controlling = false;
+			final_touch = pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y);
+			touch_difference(first_touch, final_touch);
 		
 func touch_difference(grid_1, grid_2):
 	var difference = grid_2 - grid_1;
