@@ -80,8 +80,7 @@ func pixel_to_grid(pixel_x, pixel_y):
 	return Vector2(new_x, new_y);
 
 func is_in_grid(column, row):
-	return column >= 0 && row < width && row >= 0 && row < height;
-		
+	return column >= 0 && column < width && row >= 0 && row < height;
 
 func touch_imput():
 	if Input.is_action_just_pressed("ui_touch"):
