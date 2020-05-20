@@ -115,8 +115,8 @@ func swap_pieces(column, row, direction):
 	var other_piece = all_pieces[column + direction.x][row + direction.y];
 	all_pieces[column][row] = other_piece;
 	all_pieces[column + direction.x][row + direction.y] = first_piece;
-	first_piece.position = grid_to_pixel(column + direction.x, row + direction.y);
-	other_piece.position = grid_to_pixel(column, row);
+	first_piece.move(grid_to_pixel(column + direction.x, row + direction.y));
+	other_piece.move(grid_to_pixel(column, row));
 	
 
 
